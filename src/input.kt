@@ -1,11 +1,11 @@
-class ClassName {
-    fun secondFunction(azaza: String): Int {
+class FirstClass: Object() {
+    fun firstFunction(azaza: String): Int {
         return 5
     }
+}
 
-    fun firstFunction(name: String, lastName: String) {
-        val varName = 5
-        println("This is the variable: " + varName)
+class SecondClass {
+    fun secondFunction(azaza: String) {
+        println("Obfuscate me plz")
     }
-
 }

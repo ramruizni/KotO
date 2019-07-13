@@ -1,3 +1,5 @@
+package utils
+
 import antlr.KotlinLexer
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream

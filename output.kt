@@ -1,9 +1,8 @@
- class ClassName {
- fun secondFunction (azaza:String) : Int { 
-este es el nuevo contenido papu :D
- }
- fun firstFunction (name:String,lastName:String) { 
-este es el nuevo contenido papu :D
- }
-
- }
+ class FirstClass : Object() {
+ fun firstFunction (azaza:String) : Int { 
+}
+}
+ class SecondClass {
+ fun secondFunction (azaza:String) { 
+}
+}

@@ -1,5 +1,10 @@
 import antlr.KotlinParser
+import listeners.FunctionListener
 import org.antlr.v4.runtime.tree.ParseTreeWalker
+import utils.INPUT_FILE_NAME
+import utils.OUTPUT_FILE_NAME
+import utils.getTokenStream
+import utils.saveKotlinFileOutput
 import java.io.File
 
 fun main() {
@@ -14,13 +19,12 @@ fun main() {
 
         val parser = KotlinParser(getTokenStream(fileName))
 
-        val listener = MyListener(File(fileName).readText())
+        val listener = FunctionListener("")
 
         ParseTreeWalker().apply {
             walk(listener, parser.kotlinFile())
         }
 
-        println(listener.variables)
         saveKotlinFileOutput(OUTPUT_FILE_NAME, listener.output)
     }
 }
