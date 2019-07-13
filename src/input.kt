@@ -1,5 +1,5 @@
-class FirstClass: Object() {
-    fun firstFunction(azaza: String): Int {
+private class FirstClass: Object() {
+    private fun firstFunction(azaza: String): Int {
         return 5
     }
 }
