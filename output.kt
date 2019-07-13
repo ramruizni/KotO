@@ -1,6 +1,9 @@
-class a {
-    fun b() {
-        val c = 5
-        d("This is the variable: " + c)
-    }
-}
+ class ClassName {
+ fun secondFunction (azaza:String) : Int { 
+este es el nuevo contenido papu :D
+ }
+ fun firstFunction (name:String,lastName:String) { 
+este es el nuevo contenido papu :D
+ }
+
+ }

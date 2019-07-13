@@ -1,15 +1,12 @@
 import antlr.KotlinLexer
-import antlr.KotlinParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import java.io.FileWriter
 
-fun getKotlinFileContext(fileName: String): KotlinParser.KotlinFileContext {
+fun getTokenStream(fileName: String): CommonTokenStream {
     val charStream = CharStreams.fromFileName(fileName)
     val lexer = KotlinLexer(charStream)
-    val tokenStream = CommonTokenStream(lexer)
-    val parser = KotlinParser(tokenStream)
-    return parser.kotlinFile()
+    return CommonTokenStream(lexer)
 }
 
 fun saveKotlinFileOutput(fineName: String, output: String) {
