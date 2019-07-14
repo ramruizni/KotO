@@ -1,12 +1,12 @@
-/*
 private class FirstClass: Object() {
-    private fun firstFunction(azaza: String): Int {
+    fun firstFunction(): Int {
         return 5
     }
 }
 
 class SecondClass {
-    fun secondFunction(azaza: String) {
-        println("Hello")
+    fun secondFunction(string: String): String {
+        val newString = string //+ FirstClass().firstFunction()
+        return "This is a valuable string" + newString
     }
-}*/
+}

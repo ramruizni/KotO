@@ -13,10 +13,4 @@ class MainHelper {
         } return "";
     }
 
-    static String appendReturnTypeIfNotEmpty(ParserRuleContext ctx) {
-        if (ctx != null && !ctx.isEmpty()) {
-            return ":" + typeAliasGenerator.getTypeAlias(ctx.getText());
-        } return "";
-    }
-
 }

@@ -1,5 +1,4 @@
 import antlr.KotlinParser;
-import kotlin.text.Charsets;
 import listener.MainListener;
 import listener.StringBitListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -17,8 +16,8 @@ public class Main {
                 new StringBitListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
         new ParseTreeWalker().walk(stringBitListener, parser.kotlinFile());
 
+        //System.out.println(stringBitListener.output);
         FileHelper.saveKotlinFileOutput(stringBitListener.output);
-        System.out.println(stringBitListener.output);
 
         parser = new KotlinParser(FileHelper.getTokenStream());
         MainListener mainListener =

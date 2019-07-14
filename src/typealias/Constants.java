@@ -2,9 +2,6 @@ package typealias;
 
 public class Constants {
 
-    private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-    private static final char[] DIGITS = "0123456789".toCharArray();
-
     static final char[] TYPEALIAS_CHARS = "-_()*<>|·$%&/=?¿.,:;¨´{}[]".toCharArray();
 
     static final String[] KOTLIN_HARD_KEYWORDS = {

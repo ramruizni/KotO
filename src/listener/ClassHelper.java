@@ -1,10 +1,15 @@
 package listener;
 
 import antlr.KotlinParser;
+import names.NameGenerator;
+import typealias.TypeAliasGenerator;
 
 import static listener.MainHelper.*;
 
 class ClassHelper {
+
+    private static TypeAliasGenerator typeAliasGenerator = TypeAliasGenerator.getInstance();
+    private static NameGenerator nameGenerator = NameGenerator.getInstance();
 
     static String onClassDeclaration(String input, KotlinParser.ClassDeclarationContext ctx) {
         String output = appendIfNotEmpty(ctx.modifiers());
@@ -13,8 +18,12 @@ class ClassHelper {
         } else {
             output += input.substring(ctx.start.getStartIndex(), ctx.simpleIdentifier().start.getStartIndex() - 1);
         }
-        output += " " + ctx.simpleIdentifier().getText();
-        output += appendReturnTypeIfNotEmpty(ctx.delegationSpecifiers());
+        output += " " + nameGenerator.getNewName(ctx.simpleIdentifier().getText());
+
+        if (ctx.delegationSpecifiers() != null && !ctx.delegationSpecifiers().isEmpty()) {
+            output += ":" + typeAliasGenerator.getTypeAlias(
+                    ctx.delegationSpecifiers().getText().replace("()", "")) + ("()");
+        }
 
         return output + "{\n";
     }
