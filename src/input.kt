@@ -1,3 +1,4 @@
+/*
 private class FirstClass: Object() {
     private fun firstFunction(azaza: String): Int {
         return 5
@@ -6,6 +7,6 @@ private class FirstClass: Object() {
 
 class SecondClass {
     fun secondFunction(azaza: String) {
-        println("Obfuscate me plz")
+        println("Hello")
     }
-}
+}*/

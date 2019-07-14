@@ -29,6 +29,12 @@ public class MainListener extends KotlinParserBaseListener {
     }
 
     @Override
+    public void enterStringLiteral(KotlinParser.StringLiteralContext ctx) {
+        System.out.println(ctx.getText());
+        super.enterStringLiteral(ctx);
+    }
+
+    @Override
     public void enterClassDeclaration(KotlinParser.ClassDeclarationContext ctx) {
         output += onClassDeclaration(input, ctx);
         super.enterClassDeclaration(ctx);

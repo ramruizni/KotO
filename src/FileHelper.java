@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 
 class FileHelper {
 
-    static String readFileText() {
+    static String readFileText(String fileName) {
         try {
-            return new String(Files.readAllBytes(Paths.get(Constants.INPUT_FILE_NAME)));
+            return new String(Files.readAllBytes(Paths.get(fileName)));
         } catch (IOException e) {
             e.printStackTrace();
         }

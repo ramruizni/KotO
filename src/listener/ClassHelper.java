@@ -1,7 +1,6 @@
 package listener;
 
 import antlr.KotlinParser;
-import typealias.TypeAliasGenerator;
 
 import static listener.MainHelper.*;
 
@@ -17,6 +16,6 @@ class ClassHelper {
         output += " " + ctx.simpleIdentifier().getText();
         output += appendReturnTypeIfNotEmpty(ctx.delegationSpecifiers());
 
-        return output + "{";
+        return output + "{\n";
     }
 }
