@@ -1,4 +1,5 @@
 import antlr.KotlinParser;
+import listener.InsideFunctionListener;
 import listener.MainListener;
 import listener.StringBitListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -26,5 +27,13 @@ public class Main {
 
         //System.out.println(mainListener.variables);
         FileHelper.saveKotlinFileOutput(mainListener.output);
+
+        parser = new KotlinParser(FileHelper.getTokenStream());
+        InsideFunctionListener insideFunctionListener =
+                new InsideFunctionListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
+        new ParseTreeWalker().walk(insideFunctionListener, parser.kotlinFile());
+
+        //System.out.println(mainListener.variables);
+        FileHelper.saveKotlinFileOutput(insideFunctionListener.output);
     }
 }

@@ -45,4 +45,8 @@ public class TypeAliasGenerator {
         }
         return output.toString();
     }
+
+    public Map<String, String> getMap() {
+        return map;
+    }
 }

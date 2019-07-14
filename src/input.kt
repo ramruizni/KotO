@@ -1,4 +1,4 @@
-private class FirstClass: Object() {
+private class FirstClass: Any() {
     fun firstFunction(): Int {
         return 5
     }
@@ -6,7 +6,7 @@ private class FirstClass: Object() {
 
 class SecondClass {
     fun secondFunction(string: String): String {
-        val newString = string //+ FirstClass().firstFunction()
+        val newString = string + FirstClass().firstFunction()
         return "This is a valuable string" + newString
     }
 }

@@ -40,4 +40,8 @@ public class NameGenerator {
         }
         return map.get(name);
     }
+
+    public Map<String, String> getMap() {
+        return map;
+    }
 }
