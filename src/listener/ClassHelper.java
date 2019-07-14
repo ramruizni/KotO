@@ -1,13 +1,13 @@
-package listener.morph;
+package listener;
 
 import antlr.KotlinParser;
+import typealias.TypeAliasGenerator;
 
-import static listener.morph.Main.appendIfNotEmpty;
-import static listener.morph.Main.appendReturnIfNotEmpty;
+import static listener.MainHelper.*;
 
-public class Class {
+class ClassHelper {
 
-    public static String enterClassDeclaration(String input, KotlinParser.ClassDeclarationContext ctx) {
+    static String onClassDeclaration(String input, KotlinParser.ClassDeclarationContext ctx) {
         String output = appendIfNotEmpty(ctx.modifiers());
         if (ctx.modifiers() != null) {
             output += input.substring(ctx.modifiers().stop.getStopIndex() + 1, ctx.simpleIdentifier().start.getStartIndex() - 1);
@@ -15,7 +15,7 @@ public class Class {
             output += input.substring(ctx.start.getStartIndex(), ctx.simpleIdentifier().start.getStartIndex() - 1);
         }
         output += " " + ctx.simpleIdentifier().getText();
-        output += appendReturnIfNotEmpty(ctx.delegationSpecifiers());
+        output += appendReturnTypeIfNotEmpty(ctx.delegationSpecifiers());
 
         return output + "{";
     }
