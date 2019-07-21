@@ -2,10 +2,11 @@ package listener;
 
 import antlr.KotlinParser;
 import names.NameGenerator;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.misc.Interval;
 import typealias.TypeAliasGenerator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static listener.MainHelper.appendIfNotEmpty;
 
@@ -31,11 +32,13 @@ class FunctionHelper {
     private static String onFunctionValueParameters(KotlinParser.FunctionValueParametersContext ctx) {
         if (ctx.getChildCount() == 2) return ctx.getText();
 
+        List<String> defComponents = new ArrayList<>(Arrays.asList("(", ")", ","));
+
         StringBuilder buffer = new StringBuilder();
         if (ctx.getChildCount() > 2) {
             for (int i = 0; i < ctx.getChildCount(); i++) {
                 String content = ctx.getChild(i).getText();
-                if (content.equals("(") || content.equals(")") || content.equals(",")) {
+                if (defComponents.contains(content)) {
                     buffer.append(content);
                 } else {
                     String[] elements = content.split(":");

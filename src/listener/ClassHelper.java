@@ -2,11 +2,13 @@ package listener;
 
 import antlr.KotlinParser;
 import names.NameGenerator;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 import typealias.TypeAliasGenerator;
 
-import static listener.MainHelper.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static listener.MainHelper.appendIfNotEmpty;
 
 class ClassHelper {
 
@@ -33,30 +35,33 @@ class ClassHelper {
     }
 
     static String onClassValueParameters(KotlinParser.ClassParametersContext ctx) {
-        if (ctx.getChildCount() == 2) return ctx.getText();
+        List<String> defComponents = new ArrayList<>(Arrays.asList("(", ")", ","));
 
         StringBuilder buffer = new StringBuilder();
-        if (ctx.getChildCount() > 2) {
-            for (int i = 0; i < ctx.getChildCount(); i++) {
-                String content = ctx.getChild(i).getText();
-                if (content.equals("(") || content.equals(")") || content.equals(",")) {
-                    buffer.append(content);
-                } else {
-                    for (int j = 0; j < ctx.getChild(i).getChildCount(); j++) {
-                        String element = ctx.getChild(i).getChild(j).getText();
-                        if (element.equals("val") || element.equals("var") || element.equals("private") ||
-                                element.equals("public") || element.equals("protected") || element.equals(":")
-                        || typeAliasGenerator.getMap().containsKey(element)) {
-                            buffer.append(element);
-                            buffer.append(" ");
-                        } else {
-                            buffer.append(nameGenerator.getNewName(element));
-                        }
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            if (defComponents.contains(ctx.getChild(i).getText())) {
+                buffer.append(ctx.getChild(i).getText());
+            } else {
+                List<String> arr = new ArrayList<>();
+                for (int j = 0; j < ctx.getChild(i).getChildCount(); j++) {
+                    arr.add(ctx.getChild(i).getChild(j).getText());
+                }
+                int middleIndex = arr.indexOf(":");
+
+                for (int j = 0; j < arr.size(); j++) {
+                    String element = ctx.getChild(i).getChild(j).getText();
+                    if (j == middleIndex - 1) {
+                        buffer.append(nameGenerator.getNewName(element));
+                    } else if (j == middleIndex + 1) {
+                        buffer.append(typeAliasGenerator.getTypeAlias(element));
+                    } else {
+                        buffer.append(element);
                     }
+                    buffer.append(" ");
                 }
             }
         }
-
         return buffer.toString();
     }
+
 }

@@ -4,18 +4,16 @@ private class FirstClass: Any() {
     }
 }
 
-class SecondClass {
-    val element = 5.4
-    fun secondFunction(string: String, age: Int): String {
-        val newString = string + FirstClass().firstFunction()
-        return "This is a valuable string" + newString
+class Cat {
+    val height = 5.4
+    fun getDescription(name: String, age: Int): String {
+        val newString = name + FirstClass().firstFunction()
+        return "Valuable string" + newString
     }
 }
 
-
-
-class ThirdClass(private var name: String, val age: Int) {
-    private fun printName() : String{
-        return name + age
+class Person(private var name: String = "Agapeto", val weight: Double = 8.45) {
+    private fun printWeight() : String{
+        return name +  "'s weight:  " + weight
     }
 }

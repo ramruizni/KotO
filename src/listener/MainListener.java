@@ -52,16 +52,12 @@ public class MainListener extends KotlinParserBaseListener {
         output += sourceTextForContext(ctx);
         super.enterFunctionBody(ctx);
     }
-/*
-    @Override
-    public void enterClassParameter(KotlinParser.ClassParameterContext ctx) {
-        System.out.println(ctx.getText());
-        super.enterClassParameter(ctx);
-    }
 
+    /*
     @Override
     public void enterVariableDeclaration(KotlinParser.VariableDeclarationContext ctx) {
         //System.out.println(ctx.getText());
         super.enterVariableDeclaration(ctx);
-    }*/
+    }
+    */
 }
