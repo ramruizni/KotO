@@ -10,6 +10,7 @@ public class TypeAliasGenerator {
     private static TypeAliasGenerator shared;
 
     private TypeAliasGenerator() {
+        // hiding default
     }
 
     public static TypeAliasGenerator getInstance() {

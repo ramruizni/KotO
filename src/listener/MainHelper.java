@@ -8,8 +8,9 @@ class MainHelper {
 
     static String appendIfNotEmpty(ParserRuleContext ctx) {
         if (ctx != null) {
-            return " " + ctx.getText();
-        } return "";
+            return ctx.getText() + " ";
+        }
+        return "";
     }
 
     // Code taken in C++ form from:

@@ -12,6 +12,12 @@ public class Main {
         FileHelper.saveKotlinFileOutput(original);
 
         KotlinParser parser = new KotlinParser(FileHelper.getTokenStream());
+        StringBitListener stringBitListener =
+                new StringBitListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
+        new ParseTreeWalker().walk(stringBitListener, parser.kotlinFile());
+        FileHelper.saveKotlinFileOutput(stringBitListener.output);
+
+        parser = new KotlinParser(FileHelper.getTokenStream());
         MainListener mainListener =
                 new MainListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
         new ParseTreeWalker().walk(mainListener, parser.kotlinFile());
@@ -22,11 +28,5 @@ public class Main {
                 new InsideFunctionListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
         new ParseTreeWalker().walk(insideFunctionListener, parser.kotlinFile());
         FileHelper.saveKotlinFileOutput(insideFunctionListener.output);
-
-        parser = new KotlinParser(FileHelper.getTokenStream());
-        StringBitListener stringBitListener =
-                new StringBitListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
-        new ParseTreeWalker().walk(stringBitListener, parser.kotlinFile());
-        FileHelper.saveKotlinFileOutput(stringBitListener.output);
     }
 }

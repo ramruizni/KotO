@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static listener.MainHelper.appendIfNotEmpty;
+import static listener.MainHelper.sourceTextForContext;
+import static listener.VariableHelper.fillLeftSideForSymbol;
+import static listener.VariableHelper.fillRightSideForSymbol;
 
 class FunctionHelper {
 
@@ -17,37 +20,42 @@ class FunctionHelper {
 
     static String onFunctionDeclaration(KotlinParser.FunctionDeclarationContext ctx) {
         String output = appendIfNotEmpty(ctx.modifiers());
-        output += " fun";
-        output += " " + nameGenerator.getNewName(ctx.simpleIdentifier().getText());
+        output += "fun ";
+        output += nameGenerator.getNewName(ctx.simpleIdentifier().getText());
 
         output += " " + onFunctionValueParameters(ctx.functionValueParameters());
 
         if (ctx.type() != null && !ctx.type().isEmpty()) {
             output += ":" + typeAliasGenerator.getTypeAlias(ctx.type().getText());
         }
-
         return output;
     }
 
     private static String onFunctionValueParameters(KotlinParser.FunctionValueParametersContext ctx) {
         if (ctx.getChildCount() == 2) return ctx.getText();
 
-        List<String> defComponents = new ArrayList<>(Arrays.asList("(", ")", ","));
+        String content = sourceTextForContext(ctx);
+        content = content.substring(0, content.length() - 1).substring(1);
 
         StringBuilder buffer = new StringBuilder();
-        if (ctx.getChildCount() > 2) {
-            for (int i = 0; i < ctx.getChildCount(); i++) {
-                String content = ctx.getChild(i).getText();
-                if (defComponents.contains(content)) {
-                    buffer.append(content);
-                } else {
-                    String[] elements = content.split(":");
-                    buffer.append(nameGenerator.getNewName(elements[0]));
-                    buffer.append(":");
-                    buffer.append(elements[1]);
-                }
-            }
+        int colons = countCharInString(content, ',');
+        for (int i = 0; i < colons + 1; i++) {
+            String str = content.split(",")[i];
+
+            fillLeftSideForSymbol(":", str, buffer);
+            fillRightSideForSymbol(":", str, buffer);
+
+            if (i != colons) buffer.append(",");
         }
-        return buffer.toString();
+        return "(" + buffer.toString() + ")";
+    }
+
+    private static int countCharInString(String str, char c) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == c)
+                count++;
+        }
+        return count;
     }
 }

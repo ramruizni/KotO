@@ -20,11 +20,12 @@ public class StringBitGenerator {
     }
 
     private String transformString(String string) {
-        StringBuilder builder = new StringBuilder("byteArrayOf(");
+        StringBuilder builder = new StringBuilder("azazaazazaazaza(");
         for (byte b : string.getBytes()) builder.append(b).append(",");
         builder.deleteCharAt(builder.length() - 1);
 
-        return builder.append(").toString(Charsets.UTF_8)").toString();
+        return builder.append(")").toString();
+
     }
 
     public String getOutput() {
@@ -42,6 +43,9 @@ public class StringBitGenerator {
 
             dif += transformString(content).length() - (idx.get(1) - idx.get(0));
         }
+
+        output += "fun azazaazazaazaza(vararg l: Byte):String { return byteArrayOf(*l).toString(Charsets.UTF_8).removeSurrounding(\"\\\"\")}\n";
+
         return output;
     }
 }

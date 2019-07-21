@@ -1,7 +1,7 @@
 class Constants {
 
-    static final String INPUT_FILE_NAME = "src/input.kt";
-    static final String OUTPUT_FILE_NAME = "src/output.kt";
+    static final String INPUT_FILE_NAME = "input/Main.kt";
+    static final String OUTPUT_FILE_NAME = "inputObfuscated/Main.kt";
 
     static final String[] KOTLIN_HARD_KEYWORDS = {
             "as",

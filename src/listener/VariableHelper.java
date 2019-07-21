@@ -20,27 +20,13 @@ class VariableHelper {
         if (str.endsWith("\n")) str = str.replace("\n", "");
 
         StringBuilder buffer = new StringBuilder();
-        if (str.contains(":")) {
-            fillLeftSideForSymbol(":", str, buffer);
 
-            List<String> right = new ArrayList<>(Arrays.asList(str.split(":")[1].split(" ")));
-            List<String> filterRight = new ArrayList<>();
-            for (String s : right) if (!s.equals("")) filterRight.add(s);
+        String symbol;
+        if (str.contains(":")) symbol = ":";
+        else symbol = "=";
 
-            buffer.append(typeAliasGenerator.getTypeAlias(filterRight.get(0)));
-            for (int i = 1; i < filterRight.size(); i++) {
-                buffer.append(" ");
-                buffer.append(filterRight.get(i));
-            }
-        } else {
-            fillLeftSideForSymbol("=", str, buffer);
-
-            List<String> right = new ArrayList<>(Arrays.asList(str.split("=")[1].split(" ")));
-            List<String> filterRight = new ArrayList<>();
-            for (String s : right) if (!s.equals("")) filterRight.add(s);
-
-            buffer.append(filterRight.get(0));
-        }
+        fillLeftSideForSymbol(symbol, str, buffer);
+        fillRightSideForSymbol(symbol, str, buffer);
 
         String output = buffer.toString();
         if (!output.endsWith("\n")) output += "\n";
@@ -48,7 +34,7 @@ class VariableHelper {
         return output;
     }
 
-    private static void fillLeftSideForSymbol(String symbol, String str, StringBuilder buffer) {
+    static void fillLeftSideForSymbol(String symbol, String str, StringBuilder buffer) {
         List<String> left = new ArrayList<>(Arrays.asList(str.split(symbol)[0].split(" ")));
         List<String> filterLeft = new ArrayList<>();
         for (String s : left) if (!s.equals("")) filterLeft.add(s);
@@ -59,6 +45,23 @@ class VariableHelper {
         }
         buffer.append(nameGenerator.getNewName(filterLeft.get(filterLeft.size() - 1)));
         buffer.append(symbol);
+    }
+
+    static void fillRightSideForSymbol(String symbol, String str, StringBuilder buffer) {
+        List<String> right = new ArrayList<>(Arrays.asList(str.split(symbol)[1].split(" ")));
+        List<String> filterRight = new ArrayList<>();
+        for (String s : right) if (!s.equals("")) filterRight.add(s);
+
+        if (symbol.equals(":")) {
+            buffer.append(typeAliasGenerator.getTypeAlias(filterRight.get(0)));
+            for (int i = 1; i < filterRight.size(); i++) {
+                buffer.append(" ");
+                buffer.append(filterRight.get(i));
+            }
+        } else {
+            buffer.append(filterRight.get(0));
+        }
+
     }
 
 }

@@ -10,6 +10,7 @@ public class NameGenerator {
     private static NameGenerator shared;
 
     private NameGenerator() {
+        // hiding default
     }
 
     public static NameGenerator getInstance() {
@@ -35,6 +36,8 @@ public class NameGenerator {
     }
 
     public String getNewName(String name) {
+        // this special case could be improved
+        if (name.equals("main")) return name;
         if (!map.containsKey(name)) {
             map.put(name, generateNewId());
         }
