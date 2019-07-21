@@ -48,8 +48,6 @@ class FunctionHelper {
                 }
             }
         }
-
-
         return buffer.toString();
     }
 }
