@@ -2,25 +2,19 @@ package listener;
 
 import antlr.KotlinParser;
 import antlr.KotlinParserBaseListener;
-import typealias.TypeAliasGenerator;
 
 import static listener.ClassHelper.onClassDeclaration;
+import static listener.ClassHelper.onClassValueParameters;
 import static listener.FunctionHelper.onFunctionDeclaration;
+import static listener.MainHelper.sourceTextForContext;
 
 public class MainListener extends KotlinParserBaseListener {
 
     private String input;
     public String output = "";
-    private TypeAliasGenerator typeAliasGenerator = TypeAliasGenerator.getInstance();
 
     public MainListener(String input) {
         this.input = input;
-    }
-
-    @Override
-    public void enterStringLiteral(KotlinParser.StringLiteralContext ctx) {
-        System.out.println(ctx.getText());
-        super.enterStringLiteral(ctx);
     }
 
     @Override
@@ -30,8 +24,20 @@ public class MainListener extends KotlinParserBaseListener {
     }
 
     @Override
+    public void enterClassParameters(KotlinParser.ClassParametersContext ctx) {
+        output += onClassValueParameters(ctx);
+        super.enterClassParameters(ctx);
+    }
+
+    @Override
+    public void enterClassBody(KotlinParser.ClassBodyContext ctx) {
+        output += "{\n";
+        super.enterClassBody(ctx);
+    }
+
+    @Override
     public void exitClassBody(KotlinParser.ClassBodyContext ctx) {
-        output += "}";
+        output += "}\n";
         super.exitClassBody(ctx);
     }
 
@@ -43,7 +49,19 @@ public class MainListener extends KotlinParserBaseListener {
 
     @Override
     public void enterFunctionBody(KotlinParser.FunctionBodyContext ctx) {
-        output += input.substring(ctx.start.getStartIndex(), ctx.stop.getStopIndex() + 1);
+        output += sourceTextForContext(ctx);
         super.enterFunctionBody(ctx);
     }
+/*
+    @Override
+    public void enterClassParameter(KotlinParser.ClassParameterContext ctx) {
+        System.out.println(ctx.getText());
+        super.enterClassParameter(ctx);
+    }
+
+    @Override
+    public void enterVariableDeclaration(KotlinParser.VariableDeclarationContext ctx) {
+        //System.out.println(ctx.getText());
+        super.enterVariableDeclaration(ctx);
+    }*/
 }

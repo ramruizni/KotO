@@ -18,7 +18,8 @@ class FunctionHelper {
         String output = appendIfNotEmpty(ctx.modifiers());
         output += " fun";
         output += " " + nameGenerator.getNewName(ctx.simpleIdentifier().getText());
-        output += " " + ctx.functionValueParameters().getText();
+
+        output += " " + onFunctionValueParameters(ctx.functionValueParameters());
 
         if (ctx.type() != null && !ctx.type().isEmpty()) {
             output += ":" + typeAliasGenerator.getTypeAlias(ctx.type().getText());
@@ -27,11 +28,25 @@ class FunctionHelper {
         return output;
     }
 
-    // Code taken in C++ form from:
-    // https://stackoverflow.com/questions/50443728/context-gettext-excludes-spaces-in-antlr4
-    static String sourceTextForContext(ParserRuleContext ctx) {
-        CharStream cs = ctx.start.getTokenSource().getInputStream();
-        int stopIndex = ctx.stop != null ? ctx.stop.getStopIndex() : -1;
-        return cs.getText(new Interval(ctx.start.getStartIndex(), stopIndex));
+    private static String onFunctionValueParameters(KotlinParser.FunctionValueParametersContext ctx) {
+        if (ctx.getChildCount() == 2) return ctx.getText();
+
+        StringBuilder buffer = new StringBuilder();
+        if (ctx.getChildCount() > 2) {
+            for (int i = 0; i < ctx.getChildCount(); i++) {
+                String content = ctx.getChild(i).getText();
+                if (content.equals("(") || content.equals(")") || content.equals(",")) {
+                    buffer.append(content);
+                } else {
+                    String[] elements = content.split(":");
+                    buffer.append(nameGenerator.getNewName(elements[0]));
+                    buffer.append(":");
+                    buffer.append(elements[1]);
+                }
+            }
+        }
+
+
+        return buffer.toString();
     }
 }

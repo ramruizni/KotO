@@ -5,8 +5,17 @@ private class FirstClass: Any() {
 }
 
 class SecondClass {
-    fun secondFunction(string: String): String {
+    val element = 5.4
+    fun secondFunction(string: String, age: Int): String {
         val newString = string + FirstClass().firstFunction()
         return "This is a valuable string" + newString
+    }
+}
+
+
+
+class ThirdClass(private var name: String, val age: Int) {
+    private fun printName() : String{
+        return name + age
     }
 }
