@@ -35,14 +35,14 @@ public class NumberInfixGenerator {
         if (number.contains(".")) {
             output += Double.valueOf(sum);
             for (Integer i : rands) {
-                output += " azazaazazaDoubleMinus " + Double.valueOf(i);
+                output += " azazaDoubleMinus " + Double.valueOf(i);
                 sum -= i;
             }
 
         } else {
             output += Math.round(sum);
             for (Integer i : rands) {
-                output += " azazaazazaIntMinus " + i;
+                output += " azazaIntMinus " + i;
                 sum -= i;
             }
         }
