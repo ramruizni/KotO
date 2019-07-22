@@ -2,7 +2,7 @@ package listener;
 
 import antlr.KotlinParser;
 import antlr.KotlinParserBaseListener;
-import strings.StringBitGenerator;
+import variables.StringBitGenerator;
 
 public class StringBitListener extends KotlinParserBaseListener {
 

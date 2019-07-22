@@ -329,7 +329,7 @@ fragment Letter
     | UNICODE_CLASS_NL
     ;
 
-// SECTION: strings
+// SECTION: variables
 
 QUOTE_OPEN: '"' -> pushMode(LineString);
 

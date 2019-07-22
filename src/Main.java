@@ -1,6 +1,7 @@
 import antlr.KotlinParser;
 import listener.InsideFunctionListener;
 import listener.MainListener;
+import listener.NumberInfixListener;
 import listener.StringBitListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -12,6 +13,12 @@ public class Main {
         FileHelper.saveKotlinFileOutput(original);
 
         KotlinParser parser = new KotlinParser(FileHelper.getTokenStream());
+        NumberInfixListener numberInfixListener =
+                new NumberInfixListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
+        new ParseTreeWalker().walk(numberInfixListener, parser.kotlinFile());
+        FileHelper.saveKotlinFileOutput(numberInfixListener.output);
+
+        parser = new KotlinParser(FileHelper.getTokenStream());
         StringBitListener stringBitListener =
                 new StringBitListener(FileHelper.readFileText(Constants.OUTPUT_FILE_NAME));
         new ParseTreeWalker().walk(stringBitListener, parser.kotlinFile());

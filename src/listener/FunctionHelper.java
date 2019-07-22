@@ -4,10 +4,6 @@ import antlr.KotlinParser;
 import names.NameGenerator;
 import typealias.TypeAliasGenerator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static listener.MainHelper.appendIfNotEmpty;
 import static listener.MainHelper.sourceTextForContext;
 import static listener.VariableHelper.fillLeftSideForSymbol;
@@ -21,6 +17,11 @@ class FunctionHelper {
     static String onFunctionDeclaration(KotlinParser.FunctionDeclarationContext ctx) {
         String output = appendIfNotEmpty(ctx.modifiers());
         output += "fun ";
+
+        if (ctx.receiverType() != null) {
+            output += typeAliasGenerator.getTypeAlias(ctx.receiverType().getText()) + ".";
+        }
+
         output += nameGenerator.getNewName(ctx.simpleIdentifier().getText());
 
         output += " " + onFunctionValueParameters(ctx.functionValueParameters());

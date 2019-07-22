@@ -1,4 +1,4 @@
-package strings;
+package variables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,6 @@ public class StringBitGenerator {
         builder.deleteCharAt(builder.length() - 1);
 
         return builder.append(")").toString();
-
     }
 
     public String getOutput() {
@@ -44,7 +43,8 @@ public class StringBitGenerator {
             dif += transformString(content).length() - (idx.get(1) - idx.get(0));
         }
 
-        output += "fun azazaazazaazaza(vararg l: Byte):String { return byteArrayOf(*l).toString(Charsets.UTF_8).removeSurrounding(\"\\\"\")}\n";
+        output += "fun azazaazazaazaza(vararg l: Byte):String { return byteArrayOf(*l)" +
+                ".toString(Charsets.UTF_8).removeSurrounding(\"\\\"\")}\n";
 
         return output;
     }
